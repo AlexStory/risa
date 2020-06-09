@@ -1,5 +1,10 @@
 import random
+import os
+import logging
 import discord
+
+logging.basicConfig(level=logging.INFO)
+
 
 noob_options = [
     "{} is a huge noob",
@@ -10,8 +15,10 @@ noob_options = [
     "{} isn't a noob dummy"
 ]
 
+
 class Risa(discord.Client):
     async def on_ready(self):
+        logging.log(logging.INFO, f"Logged in as {self.user}")
         print(f"Logged in as {self.user}!")
 
     
@@ -52,5 +59,6 @@ class Risa(discord.Client):
             return
 
 
+token = os.getenv('DISCORD_TOKEN')
 client = Risa()
-client.run('NzE5NzE2ODM2NDkyNDQzNjY4.Xt7gsg.sRLA7LCIW3iIo6-EHTfK0Sv8vL8')
+client.run(token)
