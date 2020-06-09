@@ -37,7 +37,7 @@ class Risa(discord.Client):
         if message.content.startswith('$roll'):
             tokens = message.content.split(' ')
             tokens = [item for item in tokens if item != ' ']
-            if len(tokens) > 1:
+            if len(tokens) == 1:
                 num = random.choice(range(100)) + 1
                 await message.channel.send(f'{num}')
             else:
