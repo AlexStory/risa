@@ -27,7 +27,7 @@ class Risa(discord.Client):
             return
 
         if message.content.startswith('$whisper'):
-            emoji = discord.utils.get(self.client.emojis, name='white_check_mark')
+            emoji = discord.utils.get(client.emojis, name='white_check_mark')
             await message.add_reaction(emoji)
             await message.author.send('hi')
             return
