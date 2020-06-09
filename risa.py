@@ -27,7 +27,7 @@ class Risa(discord.Client):
             return
 
         if message.content.startswith('$whisper'):
-            emoji = '\N00002705'
+            emoji = '\U00002705'
             await message.add_reaction(emoji)
             await message.author.send('hi')
             return
