@@ -2,6 +2,7 @@ import random
 import os
 import logging
 import discord
+import math
 
 logging.basicConfig(level=logging.INFO)
 
@@ -50,7 +51,7 @@ class Risa(discord.Client):
             else:
                 try:
                     n = int(tokens[1])
-                    num = floor(random.random() * n) + 1
+                    num = math.floor(random.random() * n) + 1
                     await message.channel.send(f'{num}')
                 except:
                     await message.channel.send('Enter the command as `$roll` or with a number like `$roll 6`')
