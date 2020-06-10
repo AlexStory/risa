@@ -49,8 +49,8 @@ class Risa(discord.Client):
                 await message.channel.send(f'{num}')
             else:
                 try:
-                    high = int(tokens[1])
-                    num = random.choice(range(high)) + 1
+                    n = int(tokens[1])
+                    num = floor(random.random() * n) + 1
                     await message.channel.send(f'{num}')
                 except:
                     await message.channel.send('Enter the command as `$roll` or with a number like `$roll 6`')
