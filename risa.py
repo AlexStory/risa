@@ -3,6 +3,7 @@ import os
 import logging
 import discord
 import math
+import requests
 
 logging.basicConfig(level=logging.INFO)
 
@@ -19,13 +20,17 @@ noob_options = [
 def roll(n):
     num = math.floor(random.random() * n) + 1
     return num
+    
+noobs = [
+    'lexan',
+    'anqwah',
+    'drago'
+]
 
 
 class Risa(discord.Client):
     async def on_ready(self):
         logging.log(logging.INFO, f"Logged in as {self.user}")
-        print(f"Logged in as {self.user}!")
-
     
     async def on_message(self, message):
         if message.author == client.user:
@@ -37,6 +42,19 @@ class Risa(discord.Client):
             await message.author.send('hi')
             return
 
+
+        if message.content == '$joke':
+            n = random.random()
+            if n < .1:
+                noob = random.choice(noobs)
+                await message.channel.send(f'{noob}')
+            else:
+                headers = {
+                    'Accept': 'application/json'
+                }
+                r = requests.get('https://icanhazdadjoke.com/', headers=headers)
+                await message.channel.send(f'{r.json()["joke"]}')
+            return
 
         if message.content.startswith('$hello'):
             await message.channel.send('Hi!')
@@ -74,7 +92,7 @@ class Risa(discord.Client):
             if len(message.mentions) < 1:
                 await message.channel.send('mention someone')
             elif len(message.mentions) > 1:
-                await message.channeel.send('only one persone please')
+                await message.channel.send('only one persone please')
             else:
                 template = random.choice(noob_options)
                 await message.channel.send(template.format(message.mentions[0].mention))
