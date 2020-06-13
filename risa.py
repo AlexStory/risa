@@ -77,10 +77,11 @@ class Risa(discord.Client):
                         [dice, size] = tokens[1].split('d')
                         if '+' in size:
                             [size, mod] = size.split('+')
-                        n = sum([roll(int(size)) for r in range(int(dice))])
+                        rolls = [roll(int(size)) for r in range(int(dice))]
+                        n = sum(rolls)
                         if int(mod) > 0:
                             n += int(mod)
-                        await message.channel.send(f'{n}')
+                        await message.channel.send(f'{n} ({",".join(rolls)})')
                     else:
                         n = int(tokens[1])
                         num = math.floor(random.random() * n) + 1
