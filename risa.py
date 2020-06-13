@@ -81,7 +81,7 @@ class Risa(discord.Client):
                             mod = mod.strip()
                         rolls = [roll(int(size)) for r in range(int(dice))]
                         n = sum(rolls)
-                        if int(mod) > 0:
+                        if int(mod):
                             n += int(mod)
                         await message.channel.send(f'{n} ({", ".join([str(r) for r in rolls])})')
                     else:
