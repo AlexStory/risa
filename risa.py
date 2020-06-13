@@ -78,8 +78,8 @@ class Risa(discord.Client):
                         if '+' in size:
                             [size, mod] = size.split('+')
                         n = sum([roll(int(size)) for r in range(int(dice))])
-                        if mod > 0:
-                            n += mod
+                        if int(mod) > 0:
+                            n += int(mod)
                         await message.channel.send(f'{n}')
                     else:
                         n = int(tokens[1])
