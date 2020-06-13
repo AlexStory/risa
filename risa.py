@@ -20,7 +20,7 @@ noob_options = [
 def roll(n):
     num = math.floor(random.random() * n) + 1
     return num
-    
+
 noobs = [
     'lexan',
     'anqwah',
@@ -74,7 +74,7 @@ class Risa(discord.Client):
                 try:
                     if 'd' in tokens[1]:
                         [dice, size] = tokens[1].split('d')
-                        n = sum([r for roll(int(size)) in range(int(dice))])
+                        n = sum([roll(int(size)) for r in range(int(dice))])
                         await message.channel.send(f'{n}')
                     else:
                         n = int(tokens[1])
