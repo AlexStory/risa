@@ -16,6 +16,10 @@ noob_options = [
     "{} isn't a noob dummy"
 ]
 
+def roll(n):
+    num = math.floor(random.random() * n) + 1
+    return num
+
 
 class Risa(discord.Client):
     async def on_ready(self):
@@ -48,11 +52,16 @@ class Risa(discord.Client):
             if len(tokens) == 1:
                 num = random.choice(range(100)) + 1
                 await message.channel.send(f'{num}')
-            else:
+            elif len(tokens) == 2:
                 try:
-                    n = int(tokens[1])
-                    num = math.floor(random.random() * n) + 1
-                    await message.channel.send(f'{num}')
+                    if 'd' in tokens[1]:
+                        [dice, size] = tokens[1].split('d')
+                        n = sum([r for roll(int(size)) in range(int(dice))])
+                        await message.channel.send(f'{n}')
+                    else:
+                        n = int(tokens[1])
+                        num = math.floor(random.random() * n) + 1
+                        await message.channel.send(f'{num}')
                 except:
                     await message.channel.send('Enter the command as `$roll` or with a number like `$roll 6`')
             return
