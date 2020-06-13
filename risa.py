@@ -77,6 +77,8 @@ class Risa(discord.Client):
                         [dice, size] = tokens[1].split('d')
                         if '+' in size:
                             [size, mod] = size.split('+')
+                            size = size.strip() 
+                            mod = mod.strip()
                         rolls = [roll(int(size)) for r in range(int(dice))]
                         n = sum(rolls)
                         if int(mod) > 0:
