@@ -84,7 +84,7 @@ async def roll(ctx, *, n='100'):
             logging.log(logging.INFO, f'arg: {n}')
             if 'd' in n:
                 [count, size] = n.split('d')
-                logging.INFO(f'initial count and size: {count} {size}')
+                logging.info(f'initial count and size: {count} {size}')
                 int(count)
                 mod = 0
                 if '+' in size:
