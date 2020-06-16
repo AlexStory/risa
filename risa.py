@@ -115,5 +115,6 @@ class Risa(discord.Client):
 
 
 token = os.getenv('DISCORD_TOKEN')
+client = Risa()
 
 client.run(token)
