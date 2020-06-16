@@ -83,13 +83,14 @@ async def roll(ctx, *, n='100'):
         try:
             if 'd' in n:
                 [count, size] = n.split('d')
-                count = count.strip()
-                size = size.strip()
+                int(count)
                 mod = 0
                 if '+' in size:
                     [size, mod] = size.split('+')
                     size = int(size)
                     mod = int(mod)
+                else:
+                    size = int(size)
                 rolls = [_roll(size) for _ in range(count)]
                 await ctx.send(f'{sum(rolls) + mod}')
         except:
