@@ -106,6 +106,9 @@ async def noob(ctx):
 
 @risa.event
 async def on_message(message):
+    if message.author == risa.user:
+        return
+
     if message.content == 'cool':
         await message.channel.send('cool cool cool')
     
