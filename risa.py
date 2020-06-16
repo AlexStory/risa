@@ -67,13 +67,14 @@ async def say(ctx, *, arg):
 
 @risa.command()
 async def noob(ctx):
+
+
     if len(ctx.message.mentions) < 1:
-        await ctx.channel.send('mention someone')
-    elif len(ctx.message.mentions) > 1:
-        await ctx.send('only one persone please')
+        await ctx.send(f'{ctx.author} is a huge noob')
     else:
-        template = random.choice(noob_options)
-        await ctx.send(template.format(ctx.message.mentions[0].mention))
+        for mention in ctx.message.mentions:
+            template = random.choice(noob_options)
+            await ctx.send(template.format(mention.mention))
 
 @risa.event
 async def on_message(message):
