@@ -113,6 +113,8 @@ async def on_message(message):
         if random.random() < 0.2:
             await message.channel.send('no u')
 
+    await risa.process_commands(message)
+
 
 token = os.getenv('DISCORD_TOKEN')
 risa.run(token)
