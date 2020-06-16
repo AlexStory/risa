@@ -74,6 +74,28 @@ async def noob(ctx):
             template = random.choice(noob_options)
             await ctx.send(template.format(mention.mention))
 
+@risa.command()
+async def roll(ctx, *, n='100'):
+    try: 
+        num = int(n)
+        await ctx.send(f'{roll(num)}')
+    except:
+        try:
+            if 'd' in n:
+                [count, size] = n.split('d')
+                count = count.strip()
+                size = size.strip()
+                mod = 0
+                if '+' in size:
+                    [size, mod] = size.split('+')
+                    size = int(size)
+                    mod = int(mod)
+                rolls = [roll(size) for _ in range(count)]
+                await ctx.send(f'{sum(rolls) + mod}')
+        except:
+            await ctx.send('Bad input try like one of the following: `roll` `roll 6` `roll 2d6+3`')
+
+
 @risa.event
 async def on_message(message):
     if message.author == risa.user:
@@ -85,33 +107,6 @@ async def on_message(message):
     if not message.content.startswith('$noob') and 'noob' in message.content:
         if random.random() < 0.2:
             await message.channel.send('no u')
-
-    if message.content.startswith('$roll'):
-        tokens = message.content.split(' ')
-        tokens = [item for item in tokens if item != ' ']
-        if len(tokens) == 1:
-            num = random.choice(range(100)) + 1
-            await message.channelsend(f'{num}')
-        elif len(tokens) == 2:
-            try:
-                if 'd' in tokens[1]:
-                    mod = 0
-                    [dice, size] = tokens[1].split('d')
-                    if '+' in size:
-                        [size, mod] = size.split('+')
-                        size = size.strip() 
-                        mod = mod.strip()
-                    rolls = [roll(int(size)) for r in range(int(dice))]
-                    n = sum(rolls)
-                    if int(mod):
-                        n += int(mod)
-                    await message.channel.send(f'{n} ({", ".join([str(r) for r in rolls])})')
-                else:
-                    n = int(tokens[1])
-                    num = math.floor(random.random() * n) + 1
-                    await message.channel.send(f'{num}')
-            except:
-                await message.channel.send('Enter the command as `$roll` or with a number like `$roll 6`')
 
     await risa.process_commands(message)
 
