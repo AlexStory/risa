@@ -1,10 +1,10 @@
 import random
 import os
 import logging
-import discord
 import math
-import requests
 
+import requests
+import discord
 from discord.ext import commands
 
 logging.basicConfig(level=logging.INFO)
@@ -30,91 +30,89 @@ noobs = [
 ]
 
 
-class Risa(discord.Client):
-    async def on_ready(self):
-        logging.log(logging.INFO, f"Logged in as {self.user}")
+risa = commands.Bot(command_prefix="$")
+
+@risa._ready
+async def on_ready(ctx):
+    logging.log(logging.INfo, f"Loggid in as {ctx.user}")
+
+
+@risa.command()
+async def whisper(ctx):
+    emoji = '\U00002705'
+    await ctx.message.add_reaction(emoji)
+    await ctx.author.send('hi')
+
+@risa.command()
+async def joke(ctx):
+    n = random.random()
+    if n < .1:
+        noob = random.choice(noobs)
+        await ctx.send(f'{noob}')
+    else:
+        headers = {
+            'Accept': 'application/json'
+        }
+        r = requests.get('https://icanhazdadjoke.com/', headers=headers)
+        await ctx.send(f'{r.json()["joke"]}')
+
+@risa.command()
+async def hello(ctx):
+    await ctx.send('Hi!')
+
+@risa.command()
+async def say(ctx, *, arg):
+    await ctx.send(arg)
+
+@risa.command()
+async def roll(ctx, *, arg):
+    tokens = ctx.message.content.split(' ')
+    tokens = [item for item in tokens if item != ' ']
+    if len(tokens) == 1:
+        num = random.choice(range(100)) + 1
+        await ctx.send(f'{num}')
+    elif len(tokens) == 2:
+        try:
+            if 'd' in tokens[1]:
+                mod = 0
+                [dice, size] = tokens[1].split('d')
+                if '+' in size:
+                    [size, mod] = size.split('+')
+                    size = size.strip() 
+                    mod = mod.strip()
+                rolls = [roll(int(size)) for r in range(int(dice))]
+                n = sum(rolls)
+                if int(mod):
+                    n += int(mod)
+                await ctx.send(f'{n} ({", ".join([str(r) for r in rolls])})')
+            else:
+                n = int(tokens[1])
+                num = math.floor(random.random() * n) + 1
+                await ctx.send(f'{num}')
+        except:
+            await ctx.send('Enter the command as `$roll` or with a number like `$roll 6`')
+
+
+@risa.command()
+async def noob(ctx):
+    if len(ctx.mentions) < 1:
+        await ctx.channel.send('mention someone')
+    elif len(ctx.mentions) > 1:
+        await ctx.send('only one persone please')
+    else:
+        template = random.choice(noob_options)
+        await ctx.send(template.format(ctx.mentions[0].mention))
+
+@risa.event()
+async def on_message(message):
+    if message.content == 'cool':
+        await message.channel.send('cool cool cool')
+        return
     
-    async def on_message(self, message):
-        if message.author == client.user:
-            return
-
-        if message.content.startswith('$whisper'):
-            emoji = '\U00002705'
-            await message.add_reaction(emoji)
-            await message.author.send('hi')
-            return
-
-
-        if message.content == '$joke':
-            n = random.random()
-            if n < .1:
-                noob = random.choice(noobs)
-                await message.channel.send(f'{noob}')
-            else:
-                headers = {
-                    'Accept': 'application/json'
-                }
-                r = requests.get('https://icanhazdadjoke.com/', headers=headers)
-                await message.channel.send(f'{r.json()["joke"]}')
-            return
-
-        if message.content.startswith('$hello'):
-            await message.channel.send('Hi!')
-            return
-
-        if message.content.startswith('$say '):
-            await message.channel.send(message.content[4:])
-            return
-
-        if message.content.startswith('$roll'):
-            tokens = message.content.split(' ')
-            tokens = [item for item in tokens if item != ' ']
-            if len(tokens) == 1:
-                num = random.choice(range(100)) + 1
-                await message.channel.send(f'{num}')
-            elif len(tokens) == 2:
-                try:
-                    if 'd' in tokens[1]:
-                        mod = 0
-                        [dice, size] = tokens[1].split('d')
-                        if '+' in size:
-                            [size, mod] = size.split('+')
-                            size = size.strip() 
-                            mod = mod.strip()
-                        rolls = [roll(int(size)) for r in range(int(dice))]
-                        n = sum(rolls)
-                        if int(mod):
-                            n += int(mod)
-                        await message.channel.send(f'{n} ({", ".join([str(r) for r in rolls])})')
-                    else:
-                        n = int(tokens[1])
-                        num = math.floor(random.random() * n) + 1
-                        await message.channel.send(f'{num}')
-                except:
-                    await message.channel.send('Enter the command as `$roll` or with a number like `$roll 6`')
-            return
-
-        if message.content == 'cool':
-            await message.channel.send('cool cool cool')
-            return
-
-        if message.content.startswith('$noob '):
-            if len(message.mentions) < 1:
-                await message.channel.send('mention someone')
-            elif len(message.mentions) > 1:
-                await message.channel.send('only one persone please')
-            else:
-                template = random.choice(noob_options)
-                await message.channel.send(template.format(message.mentions[0].mention))
-            return
-
-        if 'noob' in message.content:
-            if random.random() < 0.2:
-                await message.channel.send('no u')
-            return
+    if not message.content.startswith('$noob') and 'noob' in message.content:
+        if random.random() < 0.2:
+            await message.channel.send('no u')
 
 
 token = os.getenv('DISCORD_TOKEN')
-client = Risa()
-
-client.run(token)
+risa.run(token)
