@@ -32,7 +32,7 @@ noobs = [
 
 risa = commands.Bot(command_prefix="$")
 
-@risa.event()
+@risa.event
 async def on_ready(ctx):
     logging.log(logging.INfo, f"Loggid in as {ctx.user}")
 
@@ -103,7 +103,7 @@ async def noob(ctx):
         template = random.choice(noob_options)
         await ctx.send(template.format(ctx.mentions[0].mention))
 
-@risa.event()
+@risa.event
 async def on_message(message):
     if message.content == 'cool':
         await message.channel.send('cool cool cool')
