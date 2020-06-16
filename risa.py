@@ -34,7 +34,7 @@ risa = commands.Bot(command_prefix="$")
 
 @risa.event
 async def on_ready():
-    logging.log(logging.INFO, f"Loggid in")
+    logging.log(logging.INFO, f"Loggid in as {risa.user.name}")
 
 
 @risa.command()
@@ -58,6 +58,7 @@ async def joke(ctx):
 
 @risa.command()
 async def hello(ctx):
+    logging.log(logging.INFO, f'hi')
     await ctx.send('Hi!')
 
 @risa.command()
