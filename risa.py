@@ -108,7 +108,6 @@ async def noob(ctx):
 async def on_message(message):
     if message.content == 'cool':
         await message.channel.send('cool cool cool')
-        return
     
     if not message.content.startswith('$noob') and 'noob' in message.content:
         if random.random() < 0.2:
