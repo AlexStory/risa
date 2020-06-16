@@ -67,10 +67,8 @@ async def say(ctx, *, arg):
 
 @risa.command()
 async def noob(ctx):
-
-
     if len(ctx.message.mentions) < 1:
-        await ctx.send(f'{ctx.author} is a huge noob')
+        await ctx.send(f'{ctx.author.mention} is a huge noob')
     else:
         for mention in ctx.message.mentions:
             template = random.choice(noob_options)
