@@ -5,6 +5,8 @@ import discord
 import math
 import requests
 
+from discord.ext import commands
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -113,5 +115,10 @@ class Risa(discord.Client):
 
 
 token = os.getenv('DISCORD_TOKEN')
-client = Risa()
+client = Risa(command_prefix="$")
+
+@client.command()
+async def ping(ctx):
+    await ctx.send('pong')
+
 client.run(token)
