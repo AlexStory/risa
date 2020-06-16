@@ -96,13 +96,13 @@ async def roll(ctx, *, arg):
 
 @risa.command()
 async def noob(ctx):
-    if len(ctx.mentions) < 1:
+    if len(ctx.message.mentions) < 1:
         await ctx.channel.send('mention someone')
-    elif len(ctx.mentions) > 1:
+    elif len(ctx.message.mentions) > 1:
         await ctx.send('only one persone please')
     else:
         template = random.choice(noob_options)
-        await ctx.send(template.format(ctx.mentions[0].mention))
+        await ctx.send(template.format(ctx.message.mentions[0].mention))
 
 @risa.event
 async def on_message(message):
