@@ -115,10 +115,5 @@ class Risa(discord.Client):
 
 
 token = os.getenv('DISCORD_TOKEN')
-client = Risa(command_prefix="$")
-
-@client.command()
-async def ping(ctx):
-    await ctx.send('pong')
 
 client.run(token)
