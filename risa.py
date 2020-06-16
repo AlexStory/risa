@@ -19,7 +19,7 @@ noob_options = [
     "{} isn't a noob dummy"
 ]
 
-def roll(n):
+def _roll(n):
     num = math.floor(random.random() * n) + 1
     return num
 
@@ -78,7 +78,7 @@ async def noob(ctx):
 async def roll(ctx, *, n='100'):
     try: 
         num = int(n)
-        await ctx.send(f'{roll(num)}')
+        await ctx.send(f'{_roll(num)}')
     except:
         try:
             if 'd' in n:
@@ -90,7 +90,7 @@ async def roll(ctx, *, n='100'):
                     [size, mod] = size.split('+')
                     size = int(size)
                     mod = int(mod)
-                rolls = [roll(size) for _ in range(count)]
+                rolls = [_roll(size) for _ in range(count)]
                 await ctx.send(f'{sum(rolls) + mod}')
         except:
             await ctx.send('Bad input try like one of the following: `roll` `roll 6` `roll 2d6+3`')
