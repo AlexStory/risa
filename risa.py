@@ -32,7 +32,7 @@ noobs = [
 
 risa = commands.Bot(command_prefix="$")
 
-@risa._ready
+@risa.event()
 async def on_ready(ctx):
     logging.log(logging.INfo, f"Loggid in as {ctx.user}")
 
