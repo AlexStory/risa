@@ -98,7 +98,8 @@ async def roll(ctx, *, n='100'):
                 logging.info(f'count: {count}')
                 logging.info(f'size: {size}')
                 logging.info(f'mod: {mod}')
-                await ctx.send(f'{sum(rolls) + mod} ({",".join(rolls)}')
+                rolls = [str(r) for r in rolls]
+                await ctx.send(f'{sum(rolls) + mod} ({",".join(rolls)})')
         except:
             await ctx.send('Bad input try like one of the following: `roll` `roll 6` `roll 2d6+3`')
 
