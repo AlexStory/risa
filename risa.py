@@ -30,7 +30,7 @@ noobs = [
 ]
 
 
-risa = commands.Bot(command_prefix="$")
+risa = commands.Bot('$')
 
 @risa.event
 async def on_ready():
