@@ -9,7 +9,6 @@ from discord.ext import commands
 
 logging.basicConfig(level=logging.INFO)
 
-
 noob_options = [
     "{} is a huge noob",
     "{} is a big noob",
@@ -23,14 +22,9 @@ def _roll(n):
     num = math.floor(random.random() * n) + 1
     return num
 
-noobs = [
-    'lexan',
-    'anqwah',
-    'drago'
-]
-
 
 risa = commands.Bot('$')
+
 
 @risa.event
 async def on_ready():
@@ -43,27 +37,26 @@ async def whisper(ctx):
     await ctx.message.add_reaction(emoji)
     await ctx.author.send('hi')
 
+
 @risa.command()
 async def joke(ctx):
-    n = random.random()
-    if n < .1:
-        noob = random.choice(noobs)
-        await ctx.send(f'{noob}')
-    else:
-        headers = {
-            'Accept': 'application/json'
-        }
-        r = requests.get('https://icanhazdadjoke.com/', headers=headers)
-        await ctx.send(f'{r.json()["joke"]}')
+    headers = {
+        'Accept': 'application/json'
+    }
+    r = requests.get('https://icanhazdadjoke.com/', headers=headers)
+    await ctx.send(f'{r.json()["joke"]}')
+
 
 @risa.command()
 async def hello(ctx):
     logging.log(logging.INFO, f'hi')
     await ctx.send('Hi!')
 
+
 @risa.command()
 async def say(ctx, *, arg):
     await ctx.send(arg)
+
 
 @risa.command()
 async def noob(ctx):
@@ -73,6 +66,7 @@ async def noob(ctx):
         for mention in ctx.message.mentions:
             template = random.choice(noob_options)
             await ctx.send(template.format(mention.mention))
+
 
 @risa.command()
 async def roll(ctx, *, n='100'):
