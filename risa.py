@@ -87,10 +87,11 @@ async def roll(ctx, *, n='100'):
                 mod = 0
                 if '+' in size:
                     [size, mod] = size.split('+')
-                    size = int(size)
                     mod = int(mod)
-                else:
-                    size = int(size)
+                if '-' in size:
+                    [size, mod] = size.split('-')
+                    mod = int(mod) * -1
+                size = int(size)
                 rolls = [_roll(size) for item in range(count)]
                 total = sum(rolls) + mod
                 rolls = [str(r) for r in rolls]
