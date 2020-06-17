@@ -55,6 +55,7 @@ async def hello(ctx):
 
 @risa.command()
 async def say(ctx, *, arg):
+    await ctx.message.delete()
     await ctx.send(arg)
 
 
