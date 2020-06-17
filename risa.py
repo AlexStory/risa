@@ -81,10 +81,8 @@ async def roll(ctx, *, n='100'):
         await ctx.send(f'{_roll(num)}')
     except:
         try:
-            logging.log(logging.INFO, f'arg: {n}')
             if 'd' in n:
                 [count, size] = n.split('d')
-                logging.info(f'initial count and size: {count} {size}')
                 count = int(count)
                 mod = 0
                 if '+' in size:
@@ -94,10 +92,6 @@ async def roll(ctx, *, n='100'):
                 else:
                     size = int(size)
                 rolls = [_roll(size) for item in range(count)]
-                logging.info(f'rolls: {rolls}')
-                logging.info(f'count: {count}')
-                logging.info(f'size: {size}')
-                logging.info(f'mod: {mod}')
                 total = sum(rolls) + mod
                 rolls = [str(r) for r in rolls]
                 await ctx.send(f'{total} ({",".join(rolls)})')
