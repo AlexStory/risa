@@ -9,6 +9,7 @@ from discord.ext import commands
 
 logging.basicConfig(level=logging.INFO)
 
+last_message = ""
 noob_options = [
     "{} is a huge noob",
     "{} is a big noob",
@@ -100,6 +101,11 @@ async def on_message(message):
     if message.author == risa.user:
         return
 
+    if message.content == last_message:
+        n = random.random()
+        if n < 0.1:
+            await message.channel.send(message.content)
+
     if message.content == 'cool':
         await message.channel.send('cool cool cool')
     
@@ -107,6 +113,7 @@ async def on_message(message):
         if random.random() < 0.2:
             await message.channel.send('no u')
 
+    last_message = message.content
     await risa.process_commands(message)
 
 
