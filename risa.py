@@ -9,7 +9,7 @@ from discord.ext import commands
 
 logging.basicConfig(level=logging.INFO)
 
-last_message = ""
+last_message = ''
 noob_options = [
     "{} is a huge noob",
     "{} is a big noob",
@@ -22,6 +22,10 @@ noob_options = [
 def _roll(n):
     num = math.floor(random.random() * n) + 1
     return num
+
+
+def set_message(content: str):
+    last_message = content
 
 
 risa = commands.Bot('$')
@@ -112,8 +116,7 @@ async def on_message(message):
     if not message.content.startswith('$noob') and 'noob' in message.content:
         if random.random() < 0.2:
             await message.channel.send('no u')
-
-    last_message = message.content
+    set_message(message.content)
     await risa.process_commands(message)
 
 
