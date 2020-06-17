@@ -23,11 +23,6 @@ def _roll(n):
     num = math.floor(random.random() * n) + 1
     return num
 
-
-def set_message(content: str):
-    last_message = content
-
-
 risa = commands.Bot('$')
 
 
@@ -102,6 +97,7 @@ async def roll(ctx, *, n='100'):
 
 @risa.event
 async def on_message(message):
+    global last_message
     if message.author == risa.user:
         return
 
@@ -116,7 +112,7 @@ async def on_message(message):
     if not message.content.startswith('$noob') and 'noob' in message.content:
         if random.random() < 0.2:
             await message.channel.send('no u')
-    set_message(message.content)
+    last_message = message.content
     await risa.process_commands(message)
 
 
