@@ -103,7 +103,7 @@ async def on_message(message):
 
     if message.content == last_message:
         n = random.random()
-        if n < 0.1:
+        if n < 0.2:
             await message.channel.send(message.content)
 
     if message.content == 'cool':
